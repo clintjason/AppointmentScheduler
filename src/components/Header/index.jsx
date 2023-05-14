@@ -1,8 +1,11 @@
-import { Button } from 'antd';
-
-const Header = () => {
+const Header = ({borderRadius, width}) => {
+  
+  const Style = {
+      borderRadius: borderRadius,
+      width: width
+  }
   return (
-    <header>
+    <header style={Style}>
       <div className='header__title'>DrNG | PATIENTS</div>
     </header>
   )

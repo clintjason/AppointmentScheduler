@@ -4,7 +4,6 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
   font-synthesis: none;
@@ -19,15 +18,24 @@ body {
   background-color: rgba(221, 221, 222, 1);
   padding: 10px;
 }
-/*rgba(237, 237, 237, 1)*/
+.flex-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+/*------------------------------------------*/
+/*------------------ HEADER ----------------*/
+/*------------------------------------------*/
+
 header {
-  /*background-image: linear-gradient(to right, rgba(116, 177, 239, 1) 30%, rgba(12, 12, 13, 1) 80%);*/
   border-radius: 0px 12px;
   background-color: rgba(12, 12, 13, 0.7);
 }
 
 .header__title {
-  width: 30%;
+  width: 50%;
   font-weight: bold;
   padding: 10px 20px;
   border-radius: 0px 0px 45px;
@@ -36,12 +44,50 @@ header {
   text-align: left;
   color: white;
 }
+/*------------------------------------------*/
+/*------------------ MAIN ------------------*/
+/*------------------------------------------*/
+main {
+  padding: 40px 20px 20px;
+}
 
+.appointment__title {
+  color: rgba(180, 0, 170, 1);
+  position: relative;
+}
 
-
-
+.appointment__title::after {
+  content: "";
+  position: absolute;
+  width: 78px;
+  display: block;
+  height: 2px;
+  left: 33px;
+  background-color: rgba(180, 0, 170, 1);
+}
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+.ant-input-search-button {
+  border: 0px;
+  height: 30px !important;
+}
+
+.search-field {
+  width: 200px;
+
+}
+
+
+/*----------------------------------------------------*/
+/*------------------- MEDIA QUERY   ------------------*/
+/*----------------------------------------------------*/
+@media screen and (min-width: 668px) {
+  .header__title {
+    min-width: 30%;
+    max-width: 280px;
+  }
 }

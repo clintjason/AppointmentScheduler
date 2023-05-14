@@ -1,6 +1,6 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+/*   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+ */  line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
@@ -18,13 +18,33 @@ body {
   background-color: rgba(221, 221, 222, 1);
   padding: 10px;
 }
-.flex-box {
+.flex-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
   gap: 15px;
+  margin-bottom: 25px;
 }
+
+.column-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.center-all {
+  justify-content: center;
+  align-items: center;
+}
+
+.space-btw {
+  justify-content: space-between;
+}
+
+.space-ard {
+  justify-content: space-around;
+}
+
 /*------------------------------------------*/
 /*------------------ HEADER ----------------*/
 /*------------------------------------------*/
@@ -71,6 +91,8 @@ h1 {
   line-height: 1.1;
 }
 
+/*------------------- SEARCH FIELD  ------------------*/
+
 .ant-input-search-button {
   border: 0px;
   height: 30px !important;
@@ -81,6 +103,43 @@ h1 {
 
 }
 
+/*------------------ STATUS STATS  ------------------*/
+
+.status-stats {
+  border-radius: 0px 20px;
+  padding: 10px;
+  width: 90%;
+  max-width: 310px;
+}
+
+.status-stats .stats {
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.status-stats.passed {
+  background-color: rgba(0, 100, 0, 0.1);
+}
+
+.status-stats.missed {
+  background-color: rgba(240, 52, 52, 0.1);
+}
+
+.status-stats.rescheduled {
+  background-color: rgba(255,165,0,0.2);
+}
+
+.status-stats .passed {
+  color: rgba(0, 100, 0, 1);
+}
+
+.status-stats .missed {
+  color: rgba(180, 0, 170, 1);
+}
+
+.status-stats .rescheduled {
+  color: rgb(255,165,0);
+}
 
 /*----------------------------------------------------*/
 /*------------------- MEDIA QUERY   ------------------*/

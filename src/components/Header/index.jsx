@@ -1,12 +1,13 @@
-const Header = ({borderRadius, width}) => {
-  
+const Header = ({borderRadius, maxWidth, width}) => {
+
   const Style = {
       borderRadius: borderRadius,
+      maxWidth: maxWidth,
       width: width
   }
   return (
-    <header style={Style}>
-      <div className='header__title'>DrNG | PATIENTS</div>
+    <header style={{borderRadius: borderRadius}}>
+      <div className='header__title' style={{maxWidth: maxWidth, width: width}}>DrNG | PATIENTS</div>
     </header>
   )
 }

@@ -1,9 +1,13 @@
 import { Typography  } from 'antd';
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import Header from '../Header';
 import Search from '../Search';
 import StatusStats from '../StatusStats';
 
-const AppointmentsDashboard = () => {
+const AppointmentsDashboard = ({pageTitle}) => {
+  document.title = pageTitle;
   const { Title } = Typography;
   const stats = [
     {
@@ -36,6 +40,10 @@ const AppointmentsDashboard = () => {
         <div className='flex-wrapper center-all'>
           {displayStats}
         </div>
+        
+        <Link to="/create" className='gt-record' title="Create Appointment">
+          <FontAwesomeIcon icon={faPlus} />
+        </Link>
       </main>
     </>
   )

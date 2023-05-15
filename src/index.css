@@ -15,7 +15,8 @@
 
 /*------------------------------------------*/
 body {
-  background-color: rgba(221, 221, 222, 1);
+  /* background-color: rgba(221, 221, 222, 1); */
+  background-color: rgba(234, 229, 225);
   padding: 10px;
 }
 .flex-wrapper {
@@ -51,7 +52,7 @@ body {
 
 header {
   border-radius: 0px 12px;
-  background-color: rgba(12, 12, 13, 0.7);
+  background-color: rgb(51, 44, 42);
 }
 
 .header__title {
@@ -59,7 +60,7 @@ header {
   font-weight: bold;
   padding: 10px 20px;
   border-radius: 0px 0px 45px;
-  background-color: rgba(116, 177, 239, 1);
+  background-color: rgb(77, 127, 150);
   letter-spacing: 1.3px;
   text-align: left;
   color: white;
@@ -72,18 +73,19 @@ main {
 }
 
 .appointment__title {
-  color: rgba(180, 0, 170, 1);
+  color: rgb(156,88,98) !important;
   position: relative;
 }
 
 .appointment__title::after {
   content: "";
   position: absolute;
-  width: 78px;
+  width: 70px;
   display: block;
   height: 2px;
-  left: 33px;
-  background-color: rgba(180, 0, 170, 1);
+  left: 40px;
+  bottom: -5px;
+  background-color: rgb(156,88,98);
 }
 
 h1 {
@@ -100,7 +102,11 @@ h1 {
 
 .search-field {
   width: 200px;
+}
 
+.search-field .anticon-search {
+  color: rgb(156,88,98);
+  font-weight: bolder;
 }
 
 /*------------------ STATUS STATS  ------------------*/
@@ -118,27 +124,48 @@ h1 {
 }
 
 .status-stats.passed {
-  background-color: rgba(0, 100, 0, 0.1);
+  /* background-color: rgba(0, 100, 0, 0.1); */
+  background-color: rgba(196, 205, 196);
 }
 
 .status-stats.missed {
-  background-color: rgba(240, 52, 52, 0.1);
+  /* background-color: rgba(240, 52, 52, 0.1); */
+  background-color: rgb(233, 194, 196);
 }
 
 .status-stats.rescheduled {
-  background-color: rgba(255,165,0,0.2);
+  /* background-color: rgba(255,165,0,0.2); */
+  background-color: rgba(233,210,180);
 }
 
 .status-stats .passed {
-  color: rgba(0, 100, 0, 1);
+  /* color: rgba(0, 100, 0, 1); */
+  color: rgb(57, 105, 76);
 }
 
 .status-stats .missed {
-  color: rgba(180, 0, 170, 1);
+  /* color: rgba(180, 0, 170, 1); */
+  color: rgba(197, 25, 40);
 }
 
 .status-stats .rescheduled {
-  color: rgb(255,165,0);
+  color: rgb(216,130,18);
+}
+
+.gt-record {
+  position: absolute;
+  right: 20px;
+  bottom: 15px;
+  background-color: rgb(171,79,93);
+  padding: 0px 4px;
+  border-radius: 5px;
+  color: rgba(234, 229, 225);
+}
+
+.gtl {
+  position: absolute;
+  left: 40px;
+  font-size: 20px;
 }
 
 /*----------------------------------------------------*/

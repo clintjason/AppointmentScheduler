@@ -204,15 +204,17 @@ h1 {
 }
 
 .submit-wrapper {
+  display: block;
   width: 100%;
   margin-top: 25px;
+  /* max-width: 734px; */
 }
 
 .submit-color {
   background-color: rgb(171,79,93);
   color: white;
   font-weight: 900;
-  float: right;
+  margin: auto;
 }
 
 /*----------------------------------------------------*/

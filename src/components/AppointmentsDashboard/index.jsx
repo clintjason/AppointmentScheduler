@@ -23,30 +23,31 @@ const AppointmentsDashboard = ({pageTitle}) => {
       dispatch({type: "INIT_STORE",payload: payload});
     })()
   },[])
-/* 
-  (async () => {
-    let payload = await initState();
-    console.log("The payload is: ",payload);
-    //dispatch({type: "INIT_STORE",payload: payload});
-  })() */
-
 
   console.log(state)
+
+  const countItems = (arr, item) => {
+    return arr.filter((x) => x === item).length;
+  };
+
+  const status = state.map(stat => stat.appointment_status)
+  console.log(status)
+
   const stats = [
     {
       id: 1,
       type: 'Missed',
-      status: '15',
+      status: countItems(status,'missed'),
     },
     {
       id: 2,
       type: 'Rescheduled',
-      status: '21',
+      status: countItems(status,'pending'),
     },
     {
       id: 3,
       type: 'Passed',
-      status: '05',
+      status: countItems(status,'passed'),
     }
   ]
 

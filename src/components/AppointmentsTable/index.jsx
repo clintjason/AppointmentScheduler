@@ -200,7 +200,7 @@ const AppointmentsTable = ({data}) => {
         },
       ],
       filteredValue: filteredInfo.sex || null,
-      onFilter: (value, record) => record.sex.includes(value),
+      onFilter: (value, record) => record.sex == value,
       sorter: (a, b) => a.sex.length - b.sex.length,
       sortOrder: sortedInfo.columnKey === 'sex' ? sortedInfo.order : null,
       ellipsis: true,

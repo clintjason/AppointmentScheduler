@@ -45,8 +45,6 @@ const CreateRecord = ({pageTitle}) => {
     });
   }
 
-  useEffect(() => {})
-
   const [form] = Form.useForm();
   const [id, setId] = useState(0);
   const onGenderChange = (value) => {
@@ -88,7 +86,7 @@ const CreateRecord = ({pageTitle}) => {
       unique_code: unique_code,
     }
     // send to backend server
-    axios.post('http://localhost:3000/api/appointment/new', data)
+    axios.post('http://localhost:3000/api/appointments/new', data)
     .then(response => {
       console.log(response);
       openNotificationWithIcon('success');

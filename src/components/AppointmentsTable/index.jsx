@@ -156,8 +156,15 @@ const AppointmentsTable = ({data}) => {
       title: 'Code',
       dataIndex: 'unique_code',
       key: 'unique_code',
-      //width: '30%',
-      sorter: (a, b) => a.unique_code.length - b.unique_code.length,
+      sorter: (a, b) => {
+        if (a.unique_code.toLowerCase() < b.unique_code.toLowerCase()) {
+          return -1;
+        }
+        if (a.unique_code.toLowerCase() > b.unique_code.toLowerCase()) {
+          return 1;
+        }
+        return 0;
+      },
       sortOrder: sortedInfo.columnKey === 'unique_code' ? sortedInfo.order : null,
       ellipsis: true,
       sortDirections: ['descend', 'ascend'],

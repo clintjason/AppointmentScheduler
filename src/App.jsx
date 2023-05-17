@@ -9,6 +9,7 @@ function App() {
       <Route index element={<AppointmentsDashboard pageTitle="DrNG - Home" />} />
       <Route path='/' element={<AppointmentsDashboard pageTitle="DrNG - Home" />} />
       <Route path='/create' element={<CreateRecord pageTitle="DrNG - Create Appointment" />} />
+      <Route path='/:id/edit' element={<CreateRecord pageTitle="DrNG - Create Appointment" />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

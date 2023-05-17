@@ -8,6 +8,7 @@ import Search from '../Search';
 import StatusStats from '../StatusStats';
 import initState from '../../services/api.service';
 import { useState, useEffect } from 'react';
+import AppointmentsTable from '../AppointmentsTable';
 
 
 const AppointmentsDashboard = ({pageTitle}) => {
@@ -64,6 +65,7 @@ const AppointmentsDashboard = ({pageTitle}) => {
         <div className='flex-wrapper center-all'>
           {displayStats}
         </div>
+        <AppointmentsTable data={state} />
         <Link to="/create" className='gt-record' title="Create Appointment">
           <FontAwesomeIcon icon={faPlus} />
         </Link>

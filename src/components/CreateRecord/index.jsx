@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Header from '../Header';
-import { Typography, Divider, TimePicker, DatePicker, Button, Form, Input, Select, notification } from 'antd';
+import { Typography, Divider, TimePicker, DatePicker, Button, Form, Input, Select, notification, InputNumber } from 'antd';
 import { useState, useEffect } from 'react';
 
 import PhoneInput from "antd-phone-input";
@@ -137,7 +137,6 @@ const CreateRecord = ({pageTitle}) => {
             name="name"
             label="Name"
             className="column-wrapper"
-            tooltip="This is a required field"
             rules={[
               {
                 required: true,
@@ -145,6 +144,19 @@ const CreateRecord = ({pageTitle}) => {
             ]}
           >
             <Input placeholder="Enter Name"/>
+          </Form.Item>
+          <Form.Item
+            name="age"
+            label="Age"
+            className="column-wrapper"
+            rules={[
+              {
+                required: true,
+                type:"number",
+              },
+            ]}
+          >
+            <InputNumber min={6} placeholder="Enter Age"/>
           </Form.Item>
           <Form.Item
             name="sex"
@@ -173,9 +185,18 @@ const CreateRecord = ({pageTitle}) => {
               {
                 required: true,
               },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  const reg = /^-?\d*(\.\d*)?$/;
+                  if (reg.test(value)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('Please enter a valid phone number'));
+                },
+              }),
             ]}
           >
-            <Input placeholder="Enter Phone N°" type="phone"/>
+            <Input placeholder="Enter Phone N°"/>
           </Form.Item>
           <Form.Item
             name="email"
@@ -281,6 +302,7 @@ const CreateRecord = ({pageTitle}) => {
           <Form.Item
             label="Before appointment"
             name="before_appointment"
+            direction="vertical"
           >
             <Input.TextArea
               placeholder="Message ..."
@@ -290,7 +312,6 @@ const CreateRecord = ({pageTitle}) => {
           <Form.Item
             label="After appointment"
             name="after_appointment"
-            className="column-wrapper"
           >
             <Input.TextArea
               placeholder="Message ..."

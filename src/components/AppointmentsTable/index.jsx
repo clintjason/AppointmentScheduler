@@ -213,7 +213,7 @@ const AppointmentsTable = ({data}) => {
       filters: [
         {
           text: 'Resheduled',
-          value: 'rescheduled',
+          value: 'pending',
         },
         {
           text: 'Passed',

@@ -158,6 +158,7 @@ const AppointmentsTable = ({data}) => {
       title: 'Age',
       dataIndex: 'age',
       key: 'age',
+      width: '10%',
       sorter: (a, b) => a.age - b.age,
       sortDirections: ['descend', 'ascend'],
       sortOrder: sortedInfo.columnKey === 'age' ? sortedInfo.order : null,
@@ -260,7 +261,7 @@ const AppointmentsTable = ({data}) => {
       title: 'Appointment Date',
       dataIndex: 'appointment_date',
       key: 'appointment_date',
-      sorter: (a, b) => a.appointment_date - b.appointment_date,
+      sorter: (a, b) => new Date(a.appointment_date) - new Date(b.appointment_date),
       sortDirections: ['descend', 'ascend'],
       sortOrder: sortedInfo.columnKey === 'appointment_date' ? sortedInfo.order : null,
       ellipsis: true,
@@ -276,7 +277,7 @@ const AppointmentsTable = ({data}) => {
       title: 'createdAt',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      sorter: (a, b) => a.createdAt - b.createdAt,
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
       sortDirections: ['descend', 'ascend'],
       sortOrder: sortedInfo.columnKey === 'createdAt' ? sortedInfo.order : null,
       ellipsis: true,
@@ -292,9 +293,9 @@ const AppointmentsTable = ({data}) => {
       title: 'Action',
       dataIndex: '',
       key: 'action',
-      render: (id) => (
+      render: (record) => (
         <Space size="middle">
-          <Link to={`/${id}/edit`} className='action-btn edit'>Edit</Link>
+          <Link to={`/${record.id}/edit`} className='action-btn edit'>Edit</Link>
           <Link className='action-btn delete'>Delete</Link>
         </Space>
       ),

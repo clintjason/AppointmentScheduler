@@ -138,7 +138,15 @@ const AppointmentsTable = ({data}) => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return -1;
+        }
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+          return 1;
+        }
+        return 0;
+      },
       sortDirections: ['descend', 'ascend'],
       sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
       ellipsis: true,
@@ -170,7 +178,15 @@ const AppointmentsTable = ({data}) => {
       dataIndex: 'address',
       key: 'address',
       ...getColumnSearchProps('address'),
-      sorter: (a, b) => a.address.length - b.address.length,
+      sorter: (a, b) => {
+        if (a.address.toLowerCase() < b.address.toLowerCase()) {
+          return -1;
+        }
+        if (a.address.toLowerCase() > b.address.toLowerCase()) {
+          return 1;
+        }
+        return 0;
+      },
       sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
       ellipsis: true,
       sortDirections: ['descend', 'ascend'],

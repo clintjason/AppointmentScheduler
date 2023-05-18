@@ -58,7 +58,6 @@ const EditRecord = ({pageTitle}) => {
   }, [location]);
 
   const onFinish = (values) => {
-    console.log(values);
     axios.put(`http://localhost:3000/api/appointments//edit/${idParams}`, values)
     .then(response => {
       console.log(response);

@@ -308,6 +308,7 @@ const AppointmentsTable = ({data}) => {
       title: 'Actions',
       dataIndex: '',
       key: 'action',
+      width: '12%',
       render: (record) => (
         <Space size="middle">
           <Link to={`/${record.id}/edit`} key={`edit-${record.id}`} className='action-btn edit'>Edit</Link>

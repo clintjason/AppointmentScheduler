@@ -1,36 +1,16 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
 import Header from '../Header';
 import { Typography, Divider, TimePicker, DatePicker, Button, Form, Input, Select, notification, InputNumber } from 'antd';
-import { useState, useEffect } from 'react';
-import { getAppointmentById } from '../../services/api.service';
+import { useState } from 'react';
 
 const { Option } = Select;
-const layout = {
-  labelCol: {
-    span: 18,
-  },
-  wrapperCol: {
-    span: 18,
-  },
-  layout: 'inline'
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 4,
-    span: 14,
-  },
-};
-
 const format = 'HH:mm';
 
 const CreateRecord = ({pageTitle}) => {
   document.title = pageTitle;
-  const location = useLocation();
-  const inEditRoute = location.pathname.includes('edit');
   const { Title } = Typography;
   const [form] = Form.useForm();
   const [id, setId] = useState(0);
@@ -45,32 +25,8 @@ const CreateRecord = ({pageTitle}) => {
       description: desc,
     });
   }
-  
-  const onGenderChange = (value) => {
-    switch (value) {
-      case 'male':
-        form.current?.setFieldsValue({
-          name: 'Hi, man!',
-        });
-        break;
-      case 'female':
-        form.current?.setFieldsValue({
-          name: 'Hi, lady!',
-        });
-        break;
-      default:
-        break;
-    }
-  };
-  /* const handlePhoneChange = value => {
-   
-  }; */
-
-  const onFirstTimeChange = (value) => {}
-  const onAppointmentStatusChange = (value) => {}
 
   const onFinish = (values) => {
-    console.log(values);
     const list = values.appointment_date;
     setId(id + 1);
     const unique_code = "A" + id + list.$D + list.$M + list.$y;
@@ -88,15 +44,6 @@ const CreateRecord = ({pageTitle}) => {
       console.log(error);
       openNotificationWithIcon('error');
     })
-  };
-  const onReset = () => {
-    form.current?.resetFields();
-  };
-  const onFill = () => {
-    form.current?.setFieldsValue({
-      name: 'Hello world!',
-      gender: 'male',
-    });
   };
 
   const onRequestDateChange = (value) => {
@@ -163,7 +110,6 @@ const CreateRecord = ({pageTitle}) => {
           >
             <Select
               placeholder="Select a Gender"
-              onChange={onGenderChange}
               allowClear
             >
               <Option value="male">male</Option>
@@ -225,7 +171,6 @@ const CreateRecord = ({pageTitle}) => {
           >
             <Select
               placeholder="First time"
-              onChange={onFirstTimeChange}
               allowClear
             >
               <Option value="no">No</Option>
@@ -251,7 +196,6 @@ const CreateRecord = ({pageTitle}) => {
           >
             <Select
               placeholder="Appointment Status"
-              onChange={onAppointmentStatusChange}
               allowClear
             >
               <Option value="pending">Pending</Option>

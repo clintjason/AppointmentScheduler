@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag } from 'antd';
+import { Button, Input, Space, Table, } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { Link } from "react-router-dom";
@@ -150,6 +150,7 @@ const AppointmentsTable = ({data}) => {
       sortDirections: ['descend', 'ascend'],
       sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
       ellipsis: true,
+      filteredValue: filteredInfo.name || null,
       ...getColumnSearchProps('name'),
     },
     {
@@ -167,6 +168,7 @@ const AppointmentsTable = ({data}) => {
       },
       sortOrder: sortedInfo.columnKey === 'unique_code' ? sortedInfo.order : null,
       ellipsis: true,
+      filteredValue: filteredInfo.unique_code || null,
       sortDirections: ['descend', 'ascend'],
     },
     {
@@ -178,6 +180,7 @@ const AppointmentsTable = ({data}) => {
       sortDirections: ['descend', 'ascend'],
       sortOrder: sortedInfo.columnKey === 'age' ? sortedInfo.order : null,
       ellipsis: true,
+      filteredValue: filteredInfo.age || null,
       ...getColumnSearchProps('age'),
     },
     {
@@ -195,6 +198,7 @@ const AppointmentsTable = ({data}) => {
         return 0;
       },
       sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
+      filteredValue: filteredInfo.address || null,
       ellipsis: true,
       sortDirections: ['descend', 'ascend'],
     },
@@ -205,11 +209,12 @@ const AppointmentsTable = ({data}) => {
       ...getColumnSearchProps('phone'),
       sorter: (a, b) => a.phone - b.phone,
       sortOrder: sortedInfo.columnKey === 'phone' ? sortedInfo.order : null,
+      filteredValue: filteredInfo.phone || null,
       ellipsis: true,
       sortDirections: ['descend', 'ascend'],
     },
     {
-      title: 'Gender',
+      title: 'Sex',
       dataIndex: 'sex',
       key: 'sex',
       width: '10%',
@@ -254,29 +259,14 @@ const AppointmentsTable = ({data}) => {
       sortOrder: sortedInfo.columnKey === 'appointment_status' ? sortedInfo.order : null,
       ellipsis: true,
       sortDirections: ['descend', 'ascend'],
-      /* render: (tags) => (
-        <span>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'rescheduled') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </span>
-      ), */
       render: (status) => {
         const result = 
         status === "missed"? 
-        <a className='stats error'>{status}</a>
+        <a key="missed" className='stats error'>{status}</a>
         : status === "passed" ? 
-        <a className='stats success'>{status}</a>
+        <a key="passed" className='stats success'>{status}</a>
         :
-        <a className='stats alert'>rescheduled</a>
+        <a key="rescheduled" className='stats alert'>rescheduled</a>
         return result;
       }
     },
@@ -288,6 +278,7 @@ const AppointmentsTable = ({data}) => {
       sortDirections: ['descend', 'ascend'],
       sortOrder: sortedInfo.columnKey === 'appointment_date' ? sortedInfo.order : null,
       ellipsis: true,
+      filteredValue: filteredInfo.appointment_date || null,
       render: (date) => {
         const dates = new Date(date);
         const day = dates.getDate();
@@ -304,6 +295,7 @@ const AppointmentsTable = ({data}) => {
       sortDirections: ['descend', 'ascend'],
       sortOrder: sortedInfo.columnKey === 'createdAt' ? sortedInfo.order : null,
       ellipsis: true,
+      filteredValue: filteredInfo.createdAt || null,
       render: (date) => {
         const dates = new Date(date);
         const day = dates.getDate();
@@ -313,17 +305,17 @@ const AppointmentsTable = ({data}) => {
       }
     },
     {
-      title: 'Action',
+      title: 'Actions',
       dataIndex: '',
       key: 'action',
       render: (record) => (
         <Space size="middle">
-          <Link to={`/${record.id}/edit`} className='action-btn edit'>Edit</Link>
-          <Link className='action-btn delete'>Delete</Link>
+          <Link to={`/${record.id}/edit`} key={`edit-${record.id}`} className='action-btn edit'>Edit</Link>
+          <Link className='action-btn delete' key={`delete-${record.id}`}>Delete</Link>
         </Space>
       ),
     },
   ];
-  return <Table columns={columns} dataSource={data} onChange={handleChange} scroll={{ x: 'auto', y: 300 }} />;
+  return <Table columns={columns} dataSource={data} onChange={handleChange} scroll={{ x: 1500, y: 300 }} />;
 };
 export default AppointmentsTable;

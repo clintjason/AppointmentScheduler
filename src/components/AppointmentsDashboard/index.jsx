@@ -9,19 +9,41 @@ import StatusStats from '../StatusStats';
 import initState from '../../services/api.service';
 import { useState, useEffect } from 'react';
 import AppointmentsTable from '../AppointmentsTable';
-
+import {notification} from 'antd';
 
 const AppointmentsDashboard = ({pageTitle}) => {
   document.title = pageTitle;
   const { Title } = Typography;
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotificationWithIcon = (type) => {
+    const suc = "The Appointments list was successfully loaded. Visit the list to view, edit, and delete it if need be.";
+    const fail = "The Appointments list was not loaded successfully. Please try again later.";
+    const desc = type.toLowerCase() == 'error' ? fail : suc;
+    api[type]({
+      message: `Appointments Data Loading  ${type}`,
+      description: desc,
+    });
+  }
+
   const state = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     (async() => {
-      let payload = await initState();
-      console.log("The payload is: ",payload);
-      dispatch({type: "INIT_STORE",payload: payload});
+      try {
+        let payload = await initState();
+        console.log("The payload is: ",payload);
+        if(payload) {
+          dispatch({type: "INIT_STORE",payload: payload});
+          openNotificationWithIcon('success');
+        } else {
+          throw new Error({error: 'network error'});
+        }
+      } catch (error) {
+        console.error(error);
+        openNotificationWithIcon('error');
+      }
     })()
   },[])
 
@@ -58,6 +80,7 @@ const AppointmentsDashboard = ({pageTitle}) => {
     <>
       <Header />
       <main>
+      {contextHolder}
         <div className='flex-wrapper space-ard'>
           <Title level={2} className='appointment__title'>Appointments</Title>
           <Search />

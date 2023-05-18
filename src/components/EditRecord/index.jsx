@@ -1,6 +1,7 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import moment from 'moment';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import Header from '../Header';
@@ -9,42 +10,60 @@ import { useState, useEffect } from 'react';
 import { getAppointmentById } from '../../services/api.service';
 
 const { Option } = Select;
-const layout = {
-  labelCol: {
-    span: 18,
-  },
-  wrapperCol: {
-    span: 18,
-  },
-  layout: 'inline'
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 4,
-    span: 14,
-  },
-};
 
 const format = 'HH:mm';
 
-const CreateRecord = ({pageTitle}) => {
+const EditRecord = ({pageTitle}) => {
   document.title = pageTitle;
   const location = useLocation();
-  const inEditRoute = location.pathname.includes('edit');
+  const { id: idParams } = useParams();
   const { Title } = Typography;
   const [form] = Form.useForm();
   const [id, setId] = useState(0);
   const [api, contextHolder] = notification.useNotification();
+  const state = useSelector((state) => state);
+  const [appointment, setAppointment] = useState({});
+
+  console.log("The state is: ", state);
 
   const openNotificationWithIcon = (type) => {
-    const suc = "The Appointment was successfully created. Visit the Dashboard to view and edit it if need be.";
-    const fail = "The appointment was not created successfully. Please try again later.";
+    const suc = "The Appointment was successfully Updated. Visit the Dashboard for more updates.";
+    const fail = "The appointment was not updated successfully. Please try again later.";
     const desc = type.toLowerCase() == 'error' ? fail : suc;
     api[type]({
-      message: `Appointment Registration  ${type}`,
+      message: `${type.toUpperCase()} Editing Appointment`,
       description: desc,
     });
   }
+  const openNotifWithIcon = (type) => {
+    const suc = "The Appointment Data was successfully fetched. Inspect the form and update the data where needed.";
+    const fail = "The Appointment Data was not successfully fetched. Please try again later.";
+    const desc = type.toLowerCase() == 'error' ? fail : suc;
+    api[type]({
+      message: `${type.toUpperCase()} Fetching Appointment`,
+      description: desc,
+    });
+  }
+  
+  useEffect(() => {
+    (async() => {
+      try {
+        const result = await getAppointmentById(idParams);
+        setAppointment(result)
+        if(result) {
+          openNotifWithIcon('success');
+        } else {
+          throw new Error({error: 'network error'});
+        }
+      } catch (error) {
+        console.error(error);
+        openNotifWithIcon('error');
+      }
+    })()
+  }, [location]);
+
+
+  console.log(appointment);
   
   const onGenderChange = (value) => {
     switch (value) {
@@ -71,15 +90,7 @@ const CreateRecord = ({pageTitle}) => {
 
   const onFinish = (values) => {
     console.log(values);
-    const list = values.appointment_date;
-    setId(id + 1);
-    const unique_code = "A" + id + list.$D + list.$M + list.$y;
-    const data = {
-      ...values,
-      unique_code: unique_code,
-    }
-    // send to backend server
-    axios.post('http://localhost:3000/api/appointments/new', data)
+    axios.put(`http://localhost:3000/api/appointments//edit/${idParams}`, values)
     .then(response => {
       console.log(response);
       openNotificationWithIcon('success');
@@ -89,19 +100,76 @@ const CreateRecord = ({pageTitle}) => {
       openNotificationWithIcon('error');
     })
   };
-  const onReset = () => {
-    form.current?.resetFields();
-  };
-  const onFill = () => {
-    form.current?.setFieldsValue({
-      name: 'Hello world!',
-      gender: 'male',
-    });
-  };
 
   const onRequestDateChange = (value) => {
     form.current?.setFieldsValue({ request_date:value})
   }
+
+  const preLoadingValues = [
+    
+    {
+      "name": ["unique_code"],
+      "value": appointment.unique_code
+    },
+    {
+      "name": ["name"],
+      "value": appointment.name
+    },
+    {
+      "name": ["sex"],
+      "value": appointment.sex
+    },
+    {
+      "name": ["age"],
+      "value": appointment.age
+    },
+    {
+      "name": ["phone"],
+      "value": appointment.phone
+    },
+    {
+      "name": ["email"],
+      "value": appointment.email
+    },
+    {
+      "name": ["appointment_date"],
+      "value": moment(appointment.appointment_date, "YYYY-MM-DD")
+    },
+    {
+      "name": ["first_time"],
+      "value": appointment.first_time
+    },
+    {
+      "name": ["request_date"],
+      "value": moment(appointment.request_date, "YYYY-MM-DD")
+    },
+    {
+      "name": ["appointment_status"],
+      "value": appointment.appointment_status
+    },
+    {
+      "name": ["appointment_time"],
+      "value": moment(appointment.appointment_time)
+    },
+    {
+      "name": ["address"],
+      "value": appointment.address
+    },
+    {
+      "name": ["city"],
+      "value": appointment.city
+    },
+    {
+      "name": ["before_appointment"],
+      "value": appointment.before_appointment
+    },
+    {
+      "name": ["after_appointment"],
+      "value": appointment.after_appointment
+    },
+    
+    
+  ]
 
   return (
     <>
@@ -114,6 +182,7 @@ const CreateRecord = ({pageTitle}) => {
         </div>
         <Form
           form={form}
+          fields={preLoadingValues}
           name="control-ref"
           onFinish={onFinish}
           className="flex-wrapper"
@@ -314,7 +383,7 @@ const CreateRecord = ({pageTitle}) => {
           </Form.Item>
           <Form.Item className="submit-wrapper">
             <Button className="submit-color" htmlType="submit">
-              Save
+              Edit
             </Button>
           </Form.Item>
         </Form>
@@ -323,4 +392,4 @@ const CreateRecord = ({pageTitle}) => {
   )
 }
 
-export default CreateRecord;
+export default EditRecord;

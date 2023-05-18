@@ -58,7 +58,7 @@ const EditRecord = ({pageTitle}) => {
   }, [location]);
 
   const onFinish = (values) => {
-    axios.put(`http://localhost:3000/api/appointments//edit/${idParams}`, values)
+    axios.put(import.meta.env.VITE_DEV_BASE_URL + 'edit/' + idParams, values)
     .then(response => {
       console.log(response);
       openNotificationWithIcon('success');

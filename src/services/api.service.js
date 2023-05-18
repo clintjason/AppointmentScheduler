@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const initState = () => axios.get('http://localhost:3000/api/appointments/')
+const initState = () => axios.get(import.meta.env.VITE_DEV_BASE_URL)
   .then(response => {
     return response.data;
   })
@@ -8,7 +8,7 @@ const initState = () => axios.get('http://localhost:3000/api/appointments/')
     console.log(error);
   })
 
-export const getAppointmentById = (id) => axios.get(`http://localhost:3000/api/appointments/${id}`)
+export const getAppointmentById = (id) => axios.get(import.meta.env.VITE_DEV_BASE_URL + id)
 .then(response => {
   return response.data;
 })

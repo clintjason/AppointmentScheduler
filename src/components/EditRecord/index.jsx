@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import moment from 'moment';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
 import Header from '../Header';
 import { Typography, Divider, TimePicker, DatePicker, Button, Form, Input, Select, notification, InputNumber } from 'antd';
 import { useState, useEffect } from 'react';
@@ -19,12 +18,8 @@ const EditRecord = ({pageTitle}) => {
   const { id: idParams } = useParams();
   const { Title } = Typography;
   const [form] = Form.useForm();
-  const [id, setId] = useState(0);
   const [api, contextHolder] = notification.useNotification();
-  const state = useSelector((state) => state);
   const [appointment, setAppointment] = useState({});
-
-  console.log("The state is: ", state);
 
   const openNotificationWithIcon = (type) => {
     const suc = "The Appointment was successfully Updated. Visit the Dashboard for more updates.";
@@ -61,32 +56,6 @@ const EditRecord = ({pageTitle}) => {
       }
     })()
   }, [location]);
-
-
-  console.log(appointment);
-  
-  const onGenderChange = (value) => {
-    switch (value) {
-      case 'male':
-        form.current?.setFieldsValue({
-          name: 'Hi, man!',
-        });
-        break;
-      case 'female':
-        form.current?.setFieldsValue({
-          name: 'Hi, lady!',
-        });
-        break;
-      default:
-        break;
-    }
-  };
-  /* const handlePhoneChange = value => {
-   
-  }; */
-
-  const onFirstTimeChange = (value) => {}
-  const onAppointmentStatusChange = (value) => {}
 
   const onFinish = (values) => {
     console.log(values);
@@ -167,8 +136,6 @@ const EditRecord = ({pageTitle}) => {
       "name": ["after_appointment"],
       "value": appointment.after_appointment
     },
-    
-    
   ]
 
   return (
@@ -232,7 +199,6 @@ const EditRecord = ({pageTitle}) => {
           >
             <Select
               placeholder="Select a Gender"
-              onChange={onGenderChange}
               allowClear
             >
               <Option value="male">male</Option>
@@ -294,7 +260,6 @@ const EditRecord = ({pageTitle}) => {
           >
             <Select
               placeholder="First time"
-              onChange={onFirstTimeChange}
               allowClear
             >
               <Option value="no">No</Option>
@@ -320,7 +285,6 @@ const EditRecord = ({pageTitle}) => {
           >
             <Select
               placeholder="Appointment Status"
-              onChange={onAppointmentStatusChange}
               allowClear
             >
               <Option value="pending">Pending</Option>

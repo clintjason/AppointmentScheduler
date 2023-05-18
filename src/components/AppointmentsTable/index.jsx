@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, } from 'antd';
+import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { Link } from "react-router-dom";
@@ -10,6 +10,25 @@ const AppointmentsTable = ({data}) => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  
+  const showPopconfirm = () => {
+    setOpen(true);
+  };
+
+  const handleOk = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+  const handleCancel = () => {
+    console.log('Clicked cancel button');
+    setOpen(false);
+  };
+
 
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -23,16 +42,6 @@ const AppointmentsTable = ({data}) => {
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
-
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-
 
   const handleReset = (clearFilters) => {
     clearFilters();
@@ -132,7 +141,7 @@ const AppointmentsTable = ({data}) => {
         text
       ),
   });
-  // name, age, unique code, gender, Status, phone, address, appointment date, date of record entry.
+
   const columns = [
     {
       title: 'Name',
@@ -312,7 +321,18 @@ const AppointmentsTable = ({data}) => {
       render: (record) => (
         <Space size="middle">
           <Link to={`/${record.id}/edit`} key={`edit-${record.id}`} className='action-btn edit'>Edit</Link>
-          <Link className='action-btn delete' key={`delete-${record.id}`}>Delete</Link>
+          <Popconfirm
+            title="Delete Appointment"
+            description="Do you really want to delete this appointment?"
+            open={open}
+            onConfirm={handleOk}
+            okButtonProps={{
+              loading: confirmLoading,
+            }}
+            onCancel={handleCancel}
+          >
+            <Link className='action-btn delete' key={`delete-${record.id}`} onClick={showPopconfirm}>Delete</Link>
+          </Popconfirm>
         </Space>
       ),
     },

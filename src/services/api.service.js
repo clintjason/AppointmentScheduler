@@ -8,7 +8,7 @@ const initState = () => axios.get(import.meta.env.VITE_DEV_BASE_URL)
     return data;
   })
   .catch(error => {
-    console.log(error);
+    return error;
   })
 
 export const getAppointmentById = (id) => axios.get(import.meta.env.VITE_DEV_BASE_URL + id)
@@ -16,8 +16,28 @@ export const getAppointmentById = (id) => axios.get(import.meta.env.VITE_DEV_BAS
   return {...response.data, key: response.data.id};
 })
 .catch(error => {
-  console.log(error);
-  return error
+  return error;
 })
+
+
+export const searchData = (query) => 
+  axios.get(import.meta.env.VITE_DEV_BASE_URL + `search/`,{
+    params: {
+      name: query,
+      address: query,
+      phone: query,
+      age: query,
+      sex: query,
+    }
+  })
+  .then((response) => {
+    const data = response.data.map(elmt => {
+      return {...elmt, key: elmt.id}
+    })
+    return data;
+  })
+  .catch((error) => {
+    return error;
+  })
 
 export default initState;

@@ -16,4 +16,4 @@ Link to the Code: https://github.com/clintjason/AppointmentScheduler.git
 https://github.com/clintjason/AppointSchedulerBackend.git
 
 ### Website Preview
-![The Phone mockup of DrNG](https://github.com/clintjason/kanap/blob/main/src/assets/DrNg.png?raw=true))
+![The Phone mockup of DrNG](https://github.com/clintjason/AppointmentScheduler/blob/main/src/assets/DrNg.png?raw=true))

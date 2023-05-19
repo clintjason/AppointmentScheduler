@@ -21,7 +21,7 @@ html, body {
 html > body {
   /* background-color: rgba(221, 221, 222, 1); */
   background-color: rgba(234, 229, 225);
-  padding: 10px;
+  padding: 10px 10px 15px;
   min-height: 100vh;
 }
 
@@ -164,7 +164,7 @@ h1 {
 .gt-record {
   position: absolute;
   right: 20px;
-  bottom: 15px;
+  bottom: 0px;
   background-color: rgb(171,79,93);
   padding: 0px 4px;
   border-radius: 5px;

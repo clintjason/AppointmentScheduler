@@ -13,8 +13,12 @@ const AppointmentsTable = ({data}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   
-  const showPopconfirm = () => {
-    setOpen(true);
+  const showPopconfirm = (record) => {
+    console.log(record)
+    setOpen((prevOpen) => ({
+      ...prevOpen,
+      [record.id]: true
+    }));
   };
 
   const handleOk = () => {
@@ -318,20 +322,22 @@ const AppointmentsTable = ({data}) => {
       dataIndex: '',
       key: 'action',
       width: '12%',
-      render: (record) => (
+      render: (_,record) => (
+
         <Space size="middle">
-          <Link to={`/${record.id}/edit`} key={`edit-${record.id}`} className='action-btn edit'>Edit</Link>
+          <Link to={`/${record.id}/edit`} className='action-btn edit'>Edit</Link>
           <Popconfirm
             title="Delete Appointment"
             description="Do you really want to delete this appointment?"
             open={open}
+            key={record.id}
             onConfirm={handleOk}
             okButtonProps={{
               loading: confirmLoading,
             }}
             onCancel={handleCancel}
           >
-            <Link className='action-btn delete' key={`delete-${record.id}`} onClick={showPopconfirm}>Delete</Link>
+            <Link className='action-btn delete' onClick={(record) => showPopconfirm}>Delete</Link>
           </Popconfirm>
         </Space>
       ),

@@ -1,8 +1,10 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Popconfirm } from 'antd';
+import { Button, Input, Space, Table, notification } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { Link } from "react-router-dom";
+import { deleteAppointmentById, initState } from '../../services/api.service';
+import { useDispatch } from 'react-redux'
 
 
 const AppointmentsTable = ({data}) => {
@@ -10,29 +12,52 @@ const AppointmentsTable = ({data}) => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  
-  const showPopconfirm = (record) => {
-    console.log(record)
-    setOpen((prevOpen) => ({
-      ...prevOpen,
-      [record.id]: true
-    }));
-  };
+  const [api, contextHolder] = notification.useNotification();
+  const dispatch = useDispatch();
 
-  const handleOk = () => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-  const handleCancel = () => {
-    console.log('Clicked cancel button');
-    setOpen(false);
-  };
+  const openNotifWithIcon = (type) => {
+    const suc = "The Appointment was deleted successfully.";
+    const fail = "The Appointment was not deleted. Please try again later.";
+    const desc = type.toLowerCase() == 'error' ? fail : suc;
+    api[type]({
+      message: `${type.toUpperCase()} Deleting Appointment`,
+      description: desc,
+    });
+  }
 
+  const openNotificationWithIcon = (type) => {
+    const suc = "The Appointments list was successfully loaded. Visit the list to view, edit, and delete it if need be.";
+    const fail = "The Appointments list was not loaded successfully. Please try again later.";
+    const desc = type.toLowerCase() == 'error' ? fail : suc;
+    api[type]({
+      message: `Appointments Data Loading  ${type}`,
+      description: desc,
+    });
+  }
+
+  const deleteRecord = (event) => {
+    const id = event.currentTarget.getAttribute('data-id');
+    console.log("delete :",id);
+    deleteAppointmentById(id)
+    .then(async () => {
+      openNotifWithIcon('success');
+      try {
+        let payload = await initState();
+        if(payload) {
+          dispatch({type: "INIT_STORE",payload: payload});
+          openNotificationWithIcon('success');
+        } else {
+          throw new Error({error: 'network error'});
+        }
+      } catch (error) {
+        openNotificationWithIcon('error');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      openNotifWithIcon('error');
+    })
+  }
 
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -322,26 +347,18 @@ const AppointmentsTable = ({data}) => {
       key: 'action',
       width: '12%',
       render: (_,record) => (
-
         <Space size="middle">
           <Link to={`/${record.id}/edit`} className='action-btn edit'>Edit</Link>
-          <Popconfirm
-            title="Delete Appointment"
-            description="Do you really want to delete this appointment?"
-            open={open}
-            key={record.id}
-            onConfirm={handleOk}
-            okButtonProps={{
-              loading: confirmLoading,
-            }}
-            onCancel={handleCancel}
-          >
-            <Link className='action-btn delete' onClick={(record) => showPopconfirm}>Delete</Link>
-          </Popconfirm>
+          <Link className='action-btn delete' data-id={record.id} onClick={deleteRecord}>Delete</Link>
         </Space>
       ),
     },
   ];
-  return <Table columns={columns} dataSource={data} onChange={handleChange} scroll={{ x: 1500, y: 300 }} />;
+  return (
+    <>
+      {contextHolder}
+      <Table columns={columns} dataSource={data} onChange={handleChange} scroll={{ x: 1500, y: 300 }} />
+    </>
+  );
 };
 export default AppointmentsTable;

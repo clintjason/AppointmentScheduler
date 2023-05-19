@@ -4,7 +4,7 @@ import axios from 'axios';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Header from '../Header';
 import { Typography, Divider, TimePicker, DatePicker, Button, Form, Input, Select, notification, InputNumber } from 'antd';
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 
 const { Option } = Select;
 const format = 'HH:mm';
@@ -13,9 +13,9 @@ const CreateRecord = ({pageTitle}) => {
   document.title = pageTitle;
   const { Title } = Typography;
   const [form] = Form.useForm();
-  const [id, setId] = useState(0);
   const [api, contextHolder] = notification.useNotification();
-
+  const state = useSelector(state => state);
+  
   const openNotificationWithIcon = (type) => {
     const suc = "The Appointment was successfully created. Visit the Dashboard to view and edit it if need be.";
     const fail = "The appointment was not created successfully. Please try again later.";
@@ -28,7 +28,8 @@ const CreateRecord = ({pageTitle}) => {
 
   const onFinish = (values) => {
     const list = values.appointment_date;
-    setId(id + 1);
+    const currentId = state.length;
+    const id = currentId == 0 ? 0 : currentId + 1;
     const unique_code = "A" + id + list.$D + list.$M + list.$y;
     const data = {
       ...values,

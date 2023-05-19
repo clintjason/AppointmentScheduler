@@ -10,7 +10,6 @@ import { useState, useEffect } from 'react';
 import AppointmentsTable from '../AppointmentsTable';
 import { searchData } from '../../services/api.service';
 
-
 const AppointmentsDashboard = ({pageTitle}) => {
   document.title = pageTitle;
   const { Title } = Typography;

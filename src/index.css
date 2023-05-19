@@ -297,6 +297,40 @@ h1 {
 :where(.css-dev-only-do-not-override-ed5zg0).ant-table-wrapper .ant-table-pagination-right {
   justify-content: center;
 }
+
+/*------------------- NOT FOUND  ------------------*/
+
+.notfound {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.notfound__title {
+  font-size: 3rem !important;
+  letter-spacing: 5px;
+}
+
+.notfound__desc {
+  font-size: 1rem !important;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.notfound__link {
+  font-size: 1rem !important;
+  letter-spacing: 2px;
+}
+
+.notfound__style {
+  background-image: linear-gradient(to right, #4444dd, rgb(197,149,48), rgb(57, 105, 76), rgba(197, 25, 40));
+  color: white !important;
+  padding: 10px;
+
+}
+
 /*----------------------------------------------------*/
 /*------------------- MEDIA QUERY   ------------------*/
 /*----------------------------------------------------*/

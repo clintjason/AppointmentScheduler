@@ -1,4 +1,4 @@
-# DrNG - Patient's Appointments CMS#
+# DrNG - Patient's Appointments CMS #
 
 The aim of this project is to develop a frontend website based on ReactJS, Redux and AntDesgin to interact with a Backend API services Designed for this purpose.
 This demonstrates the use of REACTJS, REDUX, ANT DESIGN, ES6, REST API Request Consumption.
